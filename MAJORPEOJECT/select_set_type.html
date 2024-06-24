@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Paper Set</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 5px #999;
+            margin-right: 10px;
+        }
+
+        .button:hover {background-color: #3e8e41}
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 2px #666;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Select Paper Set</h1>
+    <div class="button-container">
+        <button class="button" onclick="redirectToQuestions('set-1')">Set-1 Paper</button>
+        <button class="button" onclick="redirectToQuestions('set-2')">Set-2 Paper</button>
+    </div>
+</div>
+
+<script>
+    function redirectToQuestions(set) {
+        
+        window.location.href = `select_regulation.html?set=${set}`;
+    }
+</script>
+
+</body>
+</html>

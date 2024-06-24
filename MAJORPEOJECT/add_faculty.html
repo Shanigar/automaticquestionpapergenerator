@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Faculty Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+<script>
+    // Function to display popup message
+    function showPopup(message) {
+        alert(message);
+    }
+
+    // Function to handle form submission
+    function submitForm() {
+        var formData = new FormData(document.getElementById("addFacultyForm"));
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "save_faculty.php", true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                if (xhr.responseText.trim() === "success") {
+                    showPopup("Successfully inserted");
+                    document.getElementById("addFacultyForm").reset();
+                } else {
+                    alert("Error: " + xhr.responseText);
+                }
+            } else {
+                alert("Error: " + xhr.statusText);
+            }
+        };
+        xhr.onerror = function() {
+            alert("Network Error");
+        };
+        xhr.send(formData);
+    }
+</script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add Faculty</h2>
+    <form id="addFacultyForm" onsubmit="event.preventDefault(); submitForm();" method="POST">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="subjectCode">Subject Code:</label>
+            <input type="text" id="subjectCode" name="subjectCode" required>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Add Faculty</button>
+    </form>
+</div>
+
+</body>
+</html>

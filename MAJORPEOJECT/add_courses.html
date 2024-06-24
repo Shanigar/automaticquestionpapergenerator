@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subject List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 80%;
+        margin: 20px auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    select {
+        padding: 8px;
+        font-size: 16px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Subject List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>year</th>
+                <th>semester</th>
+                <th>action</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select class="department">
+                        <option value="cse">CSE</option>
+                        <option value="csm">CSM</option>
+                        <option value="eee">EEE</option>
+                        <option value="mech">MECH</option>
+                        <option value="civil">CIVIL</option>
+                        <option value="mining">MINING</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="year">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="semester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </td>
+                <td>
+                    <button onclick="getSubjects()">Go</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div id="subjectTable"></div>
+</div>
+
+<script>
+    function getSubjects() {
+        var department = document.querySelector('.department').value;
+        var year = document.querySelector('.year').value;
+        var semester = document.querySelector('.semester').value;
+
+        // AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "getSubjects.php?department=" + department + "&year=" + year + "&semester=" + semester, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                document.getElementById("subjectTable").innerHTML = response;
+            }
+        };
+        xhr.send();
+    }
+</script>
+</body>
+</html>

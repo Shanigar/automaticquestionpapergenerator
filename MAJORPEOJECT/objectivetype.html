@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Objective paper</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .header-info h1, .header-info h3 {
+    text-align: center;
+  }
+
+  .header-info input {
+    width: 48%;
+    margin: 5px 1%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .underline {
+    border-bottom: 2px solid #ddd;
+    margin: 20px 0;
+  }
+
+  .question, .fill-blanks, .match {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  .question label, .fill-blanks label, .match label {
+    font-weight: bold;
+  }
+
+  .textbox {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+
+  .options {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .option-textbox {
+    margin-left: 5px;
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .remove-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  .remove-btn:hover {
+    background-color: #c82333;
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px 0;
+    display: inline-block;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .buttons-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-info">
+            <select id="examType">
+                <option value="I B.Tech I Semester I MID-Term Examinations">I B.Tech I Semester I MID-Term Examinations</option>
+                <option value="I B.Tech I Semester II MID-Term Examinations">I B.Tech I Semester II MID-Term Examinations</option>
+                <option value="I B.Tech II Semester I MID-Term Examinations">I B.Tech II Semester I MID-Term Examinations</option>
+                <option value="I B.Tech II Semester II MID-Term Examinations">I B.Tech II Semester II MID-Term Examinations</option>
+    
+                <option value="II B.Tech I Semester I MID-Term Examinations">II B.Tech I Semester I MID-Term Examinations</option>
+                <option value="II B.Tech I Semester II MID-Term Examinations">II B.Tech I Semester II MID-Term Examinations</option>
+                <option value="II B.Tech II Semester I MID-Term Examinations">II B.Tech II Semester I MID-Term Examinations</option>
+                <option value="II B.Tech II Semester II MID-Term Examinations">II B.Tech II Semester II MID-Term Examinations</option>
+    
+                <option value="III B.Tech I Semester I MID-Term Examinations">III B.Tech I Semester I MID-Term Examinations</option>
+                <option value="III B.Tech I Semester II MID-Term Examinations">III B.Tech I Semester II MID-Term Examinations</option>
+                <option value="III B.Tech II Semester I MID-Term Examinations">III B.Tech II Semester I MID-Term Examinations</option>
+                <option value="III B.Tech II Semester II MID-Term Examinations">III B.Tech II Semester II MID-Term Examinations</option>
+    
+                <option value="IV B.Tech I Semester I MID-Term Examinations">IV B.Tech I Semester I MID-Term Examinations</option>
+                <option value="IV B.Tech I Semester II MID-Term Examinations">IV B.Tech I Semester II MID-Term Examinations</option>
+                <option value="IV B.Tech II Semester I MID-Term Examinations">IV B.Tech II Semester I MID-Term Examinations</option>
+                <option value="IV B.Tech II Semester II MID-Term Examinations">IV B.Tech II Semester II MID-Term Examinations</option>
+            </select><br><br>
+            <input type="text" id="subjectName" placeholder="Subject Name"> <br><br>
+            <select id="branch">
+                <option value="CSE">CSE</option>
+                <option value="CSE(AL&ML)">CSE(AI&ML)</option>
+                <option value="EEE">EEE</option>
+                <option value="MECH">MECH</option>
+                <option value="CE">CE</option>
+                <option value="Mining">Mining</option>
+    
+    
+            </select><br><br>
+            <input type="text" id="examDate" placeholder="Date of Exam">
+        </div>
+        <div class="underline"></div>
+    </div>
+    
+
+  <div id="questions-container">
+    <!-- Questions will be dynamically added here -->
+  </div>
+
+  <div id="fill-blanks-container">
+    <!-- Fill in the Blanks questions will be dynamically added here -->
+  </div>
+
+  <div id="match-container">
+    <!-- Match the Following questions will be dynamically added here -->
+  </div>
+
+  <div class="buttons-container">
+    <button onclick="addQuestion()"><i class="fas fa-plus"></i> Add Multiple Choice Question</button>
+    <button onclick="addFillBlanks()"><i class="fas fa-plus"></i> Add Fill in the Blanks Question</button>
+    <button onclick="addMatchTheFollowing()"><i class="fas fa-plus"></i> Add Match the Following Question</button>
+    <button onclick="generatePDF()"><i class="fas fa-file-pdf"></i> Generate PDF</button>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function addQuestion() {
+  var questionNumber = document.querySelectorAll('.question').length + 1;
+  var questionDiv = document.createElement('div');
+  questionDiv.className = 'question';
+
+  var questionLabel = document.createElement('label');
+  questionLabel.textContent = 'Question ' + questionNumber + ':';
+  questionDiv.appendChild(questionLabel);
+
+  var questionInput = document.createElement('input');
+  questionInput.type = 'text';
+  questionInput.className = 'textbox question-textbox';
+  questionInput.placeholder = 'Enter your question here';
+  questionDiv.appendChild(questionInput);
+
+  var optionsDiv = document.createElement('div');
+  optionsDiv.className = 'options';
+  
+  // Add four default options
+  for (var i = 0; i < 4; i++) {
+    var optionDiv = document.createElement('div');
+    optionDiv.className = 'option';
+
+    var optionLabel = document.createElement('label');
+    optionLabel.textContent = String.fromCharCode(97 + i) + '.';
+
+    var optionInput = document.createElement('input');
+    optionInput.type = 'text';
+    optionInput.className = 'textbox option-textbox';
+    optionInput.placeholder = 'Enter option ' + String.fromCharCode(97 + i);
+
+    optionDiv.appendChild(optionLabel);
+    optionDiv.appendChild(optionInput);
+    optionsDiv.appendChild(optionDiv);
+  }
+
+  questionDiv.appendChild(optionsDiv);
+
+  var removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-btn';
+  removeBtn.textContent = 'Remove Question';
+  removeBtn.onclick = function() {
+    questionDiv.remove();
+  };
+  questionDiv.appendChild(removeBtn);
+
+  document.getElementById('questions-container').appendChild(questionDiv);
+}
+
+function addFillBlanks() {
+  var fillBlanksNumber = document.querySelectorAll('.fill-blanks').length + 1;
+  var fillBlanksDiv = document.createElement('div');
+  fillBlanksDiv.className = 'fill-blanks';
+
+  var fillBlanksLabel = document.createElement('label');
+  fillBlanksLabel.textContent = 'Fill in the Blank ' + fillBlanksNumber + ':';
+  fillBlanksDiv.appendChild(fillBlanksLabel);
+
+  var fillBlanksInput = document.createElement('input');
+  fillBlanksInput.type = 'text';
+  fillBlanksInput.className = 'textbox fill-blanks-textbox';
+  fillBlanksInput.placeholder = 'Enter your fill in the blanks question here';
+  fillBlanksDiv.appendChild(fillBlanksInput);
+
+  var removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-btn';
+  removeBtn.textContent = 'Remove Question';
+  removeBtn.onclick = function() {
+    fillBlanksDiv.remove();
+  };
+  fillBlanksDiv.appendChild(removeBtn);
+
+  document.getElementById('fill-blanks-container').appendChild(fillBlanksDiv);
+}
+
+function addMatchTheFollowing() {
+  var matchNumber = document.querySelectorAll('.match').length + 1;
+  var matchDiv = document.createElement('div');
+  matchDiv.className = 'match';
+
+  var matchLabel = document.createElement('label');
+  matchLabel.textContent = 'Match the Following ' + matchNumber + ':';
+  matchDiv.appendChild(matchLabel);
+
+  var matchInput = document.createElement('input');
+  matchInput.type = 'text';
+  matchInput.className = 'textbox match-textbox';
+  matchInput.placeholder = 'Enter your Match the Following question here';
+  matchDiv.appendChild(matchInput);
+
+  // Generate alphabet for options based on the question number
+  var optionAlphabet = String.fromCharCode(97 + matchNumber - 1);
+
+  var optionDiv = document.createElement('div');
+  optionDiv.className = 'option';
+
+  var optionLabel = document.createElement('label');
+  optionLabel.textContent = ' (' + optionAlphabet + ') ';
+
+  var optionInput = document.createElement('input');
+  optionInput.type = 'text';
+  optionInput.className = 'textbox option-textbox';
+  optionInput.placeholder = 'Enter option for ' + optionAlphabet;
+
+  optionDiv.appendChild(optionLabel);
+  optionDiv.appendChild(optionInput);
+  matchDiv.appendChild(optionDiv);
+
+  var removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-btn';
+  removeBtn.textContent = 'Remove Question';
+  removeBtn.onclick = function() {
+    matchDiv.remove();
+  };
+  matchDiv.appendChild(removeBtn);
+
+  document.getElementById('match-container').appendChild(matchDiv);
+}
+
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+
+  // Add college info to the PDF
+  var collegeName = "JNTUH University College of Engineering Manthani";
+  var collegeAddress ="Centenary Colony, Pannur (V), Ramagiri (M), Peddapally (D), Telangana-505212.";
+  var examType = document.getElementById('examType').value;
+  var subjectName = document.getElementById('subjectName').value;
+  var branch = document.getElementById('branch').value;
+  var marks = "Marks: 10";
+  var examDate = document.getElementById('examDate').value;
+  var studentName = "Name:";
+  var rollNumber = "Roll.No:";
+  doc.setFontSize(17);
+  doc.text(collegeName, 23, 13);
+  doc.setFontSize(12);
+  doc.text(collegeAddress, 19, 20);
+  doc.text("" + examType, 47, 27); 
+  doc.text("Subject: " + subjectName, 10, 34);
+  var branchWidth = doc.getTextWidth("Branch: " + branch);
+  var marksWidth = doc.getTextWidth("Marks: " + marks);
+  doc.text("Branch: " + branch, 10, 41);
+  doc.text(marks, 160 - marksWidth, 41); 
+  var examDateWidth = doc.getTextWidth("examDateWidth: " + examDate);
+  var TimeWidth = doc.getTextWidth("Time: " + marks);
+  doc.text("Date of Exam: " + examDate, 10, 48); // Adjusted yPos
+  doc.text("Time: 20 Minutes",158- TimeWidth, 48); // Adjusted yPos
+  doc.text(studentName, 10, 56); // Adjusted yPos
+  doc.text(rollNumber, 158 - TimeWidth, 56);
+  doc.line(10, 60, 200, 60); // Adjusted yPos for the underline
+
+  let yPos = 66; // Start position for the note statement
+  // Add Multiple Choice Questions heading
+  doc.setFontSize(16);
+  doc.text("Multiple Choice Questions                                         (10 x 1/2 = 5 Marks)", 10, yPos);
+
+  // Set initial y-coordinate for questions
+  yPos += 5; // Adjust as needed for spacing
+
+  // Iterate over each question
+  document.querySelectorAll('.question').forEach((question, index) => {
+    var questionText = question.querySelector('.question-textbox').value + ' (   )'; // Add "()"
+    var options = [];
+    question.querySelectorAll('.option-textbox').forEach(option => {
+      options.push(option.value);
+    });
+
+    // Calculate space required for question and options
+    var spaceRequired = (options.length + 1) * 10; // 1 line for question + 1 line for each option
+
+    // Check if there's enough space on the page for the question and options
+    if (yPos + spaceRequired > doc.internal.pageSize.height) {
+      // If not enough space, start a new page
+      doc.addPage();
+      yPos = 10; // Reset yPos for new page
+    }
+
+    // Add question text to PDF
+    doc.setFontSize(13);
+    var splitTitle = doc.splitTextToSize((index + 1) + '. ' + questionText, doc.internal.pageSize.width - 20);
+    doc.text(10, yPos, splitTitle);
+
+    // Concatenate options into one string with spacing
+    var optionsString = options.map((option, i) => String.fromCharCode(97 + i) + '. ' + option).join('     ');
+
+    // Add options to PDF
+    doc.setFontSize(13);
+    var splitOptions = doc.splitTextToSize(optionsString, doc.internal.pageSize.width - 20);
+    doc.text(10, yPos + Math.max(splitTitle.length, splitOptions.length) * 10, splitOptions); // Decreased x-coordinate to 10
+
+    yPos += Math.max(splitTitle.length, splitOptions.length) * 10 + 10; // Adjust as needed for desired spacing
+
+    // Add space between questions
+    yPos += 4; // Reduced space between questions
+  });
+
+  // Set yPos for Fill in the Blanks heading
+  yPos += 10;
+
+  // Add Fill in the Blanks heading
+  doc.setFontSize(16);
+  doc.text("Fill in the Blanks                                                      (5 x 1/2 = 2 1/2 Marks)", 10, yPos); // Adjust yPos as needed
+
+  // Set initial y-coordinate for fill in the blanks
+  yPos += 10; // Adjust as needed for desired spacing
+
+  // Iterate over each fill in the blanks question
+  document.querySelectorAll('.fill-blanks').forEach((fillBlanks, index) => {
+    var fillBlanksText = fillBlanks.querySelector('.fill-blanks-textbox').value;
+
+    // Add fill in the blanks text to PDF
+    doc.setFontSize(13);
+    var splitText = doc.splitTextToSize((index + 1) + '. ' + fillBlanksText, doc.internal.pageSize.width - 20);
+    doc.text(10, yPos, splitText);
+
+    yPos += 10; // Adjust as needed for desired spacing
+  });
+
+  // Set yPos for Match the Following heading
+  yPos += 4;
+
+  // Add Match the Following heading
+  doc.setFontSize(16);
+  doc.text("Match the Following                                                 (5 x 1/2 = 2 1/2 Marks)", 10, yPos); // Adjust yPos as needed
+
+  // Set initial y-coordinate for Match the Following
+  yPos += 10; // Adjust as needed for desired spacing
+
+  // Iterate over each Match the Following question
+  document.querySelectorAll('.match').forEach((match, index) => {
+    var matchText = match.querySelector('.match-textbox').value;
+    var option = match.querySelector('.option-textbox').value;
+    var optionAlphabet = String.fromCharCode(97 + index); // Generate alphabet for options based on the question index
+
+    // Add Match the Following text and option to PDF
+    doc.setFontSize(13);
+    var splitText = doc.splitTextToSize((index + 1) + '. ' + matchText + ' (    )'  +  optionAlphabet + '. '  + option, doc.internal.pageSize.width - 20);
+    doc.text(10, yPos, splitText);
+
+    yPos += 10; // Adjust as needed for desired spacing
+
+    // Check if there's enough space on the page for the next question
+    if (yPos > doc.internal.pageSize.height - 20) {
+      // If not enough space, start a new page
+      doc.addPage();
+      yPos = 20; // Reset yPos for new page
+    }
+  });
+  doc.save('objective.pdf');
+}
+</script>
+
+</body>
+</html>

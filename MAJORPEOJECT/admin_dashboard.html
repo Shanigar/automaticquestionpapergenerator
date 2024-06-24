@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #e6c7e5;
+    padding-top: 20px;
+}
+
+.sidebar header {
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    padding-bottom: 20px;
+    position: relative;
+    border-bottom: 2px solid #fff; /* Add this line */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px 20px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+.sidebar a:hover {
+    background-color: #3e197e;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.tabcontent {
+    display: none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <header>Admin Dashboard</header>
+    <ul>
+        <li><a href="add_courses.html">Add Courses</a></li>
+        <li><a href="add_faculty.html">Add Faculty</a></li>
+        <li><a href="admin_logout.php" onclick="logout()">Logout</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div id="profile" class="tabcontent">
+        <h2>Profile</h2>
+        <!-- Profile content here -->
+    </div>
+
+    <div id="addCourses" class="tabcontent">
+        <h2>Add Courses</h2>
+        <!-- Add Courses content here -->
+    </div>
+
+    <div id="addFaculty" class="tabcontent">
+        <h2>Add Faculty</h2>
+        <!-- Add Faculty content here -->
+    </div>
+</div>
+
+<script>
+    function openTab(tabName) {
+    var i, tabcontent;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    document.getElementById(tabName).style.display = "block";
+}
+
+function logout() {
+    // Add your logout logic here, for example, redirect to the logout page
+    alert("Logging out...");
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descriptive Paper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #question-container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .sub-question {
+            margin-left: 20px;
+        }
+
+        input[type="text"] {
+            width: calc(30% - 10px); 
+            padding: 8px;
+            margin: 4px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="text"].full-width {
+            width: 60%;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-info">
+        <select id="examType">
+            <option value="I B.Tech I Semester I MID-Term Examinations">I B.Tech I Semester I MID-Term Examinations</option>
+            <option value="I B.Tech I Semester II MID-Term Examinations">I B.Tech I Semester II MID-Term Examinations</option>
+            <option value="I B.Tech II Semester I MID-Term Examinations">I B.Tech II Semester I MID-Term Examinations</option>
+            <option value="I B.Tech II Semester II MID-Term Examinations">I B.Tech II Semester II MID-Term Examinations</option>
+            <option value="II B.Tech I Semester I MID-Term Examinations">II B.Tech I Semester I MID-Term Examinations</option>
+            <option value="II B.Tech I Semester II MID-Term Examinations">II B.Tech I Semester II MID-Term Examinations</option>
+            <option value="II B.Tech II Semester I MID-Term Examinations">II B.Tech II Semester I MID-Term Examinations</option>
+            <option value="II B.Tech II Semester II MID-Term Examinations">II B.Tech II Semester II MID-Term Examinations</option>
+            <option value="III B.Tech I Semester I MID-Term Examinations">III B.Tech I Semester I MID-Term Examinations</option>
+            <option value="III B.Tech I Semester II MID-Term Examinations">III B.Tech I Semester II MID-Term Examinations</option>
+            <option value="III B.Tech II Semester I MID-Term Examinations">III B.Tech II Semester I MID-Term Examinations</option>
+            <option value="III B.Tech II Semester II MID-Term Examinations">III B.Tech II Semester II MID-Term Examinations</option>
+            <option value="IV B.Tech I Semester I MID-Term Examinations">IV B.Tech I Semester I MID-Term Examinations</option>
+            <option value="IV B.Tech I Semester II MID-Term Examinations">IV B.Tech I Semester II MID-Term Examinations</option>
+            <option value="IV B.Tech II Semester I MID-Term Examinations">IV B.Tech II Semester I MID-Term Examinations</option>
+            <option value="IV B.Tech II Semester II MID-Term Examinations">IV B.Tech II Semester II MID-Term Examinations</option>
+        </select><br><br>
+        <input type="text" id="subjectName" placeholder="Subject Name"> <br><br>
+        <select id="branch">
+            <option value="CSE">CSE</option>
+            <option value="CSE(AL&ML)">CSE(AI&ML)</option>
+            <option value="EEE">EEE</option>
+            <option value="MECH">MECH</option>
+            <option value="CE">CE</option>
+            <option value="Mining">ME</option>
+        </select><br><br>
+        <input type="text" id="examDate" placeholder="Date of Exam">
+    </div>
+    <div class="underline"></div>
+</div>
+
+<div id="question-container">
+    <form id="question-form"></form>
+    <button type="button" onclick="addQuestion()">Add Question</button><br><br>
+    <button type="button" onclick="generatePDF()">Generate PDF</button><br><br>
+    <button type="button" onclick="navigateToMultipleChoice()">Next</button><br><br>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    let questionCount = 0;
+
+    function addQuestion() {
+        if (questionCount >= 4) {
+            alert("You can only add up to 4 questions.");
+            return;
+        }
+        questionCount++;
+        const questionForm = document.getElementById('question-form');
+        const questionBlock = document.createElement('div');
+        questionBlock.classList.add('question-block', 'question'); 
+        questionBlock.innerHTML = `
+            <label for="question${questionCount}">Question ${questionCount}</label>
+            <input type="text" id="question${questionCount}" name="question${questionCount}">
+            <input type="file" id="image${questionCount}" name="image${questionCount}" accept="image/*">
+            <button type="button" onclick="addSubQuestion(${questionCount})">Add Sub-Question</button>
+            <button type="button" onclick="clearQuestion(${questionCount})">Remove Question</button>
+            <div class="sub-questions" id="sub-questions${questionCount}">
+                <!-- Sub-questions will be added here -->
+            </div>
+        `;
+        questionForm.appendChild(questionBlock);
+    }
+
+    function addSubQuestion(questionNumber) {
+        const subQuestionsContainer = document.getElementById(`sub-questions${questionNumber}`);
+        const subQuestionCount = subQuestionsContainer.children.length / 3 + 1;
+        const subQuestionDiv = document.createElement('div');
+        subQuestionDiv.classList.add('sub-question');
+        subQuestionDiv.innerHTML = `
+            <input type="text" name="question${questionNumber}sub${subQuestionCount}" id="question${questionNumber}sub${subQuestionCount}">
+            <input type="file" name="image${questionNumber}sub${subQuestionCount}" id="image${questionNumber}sub${subQuestionCount}" accept="image/*">
+            <button type="button" onclick="clearSubQuestion(this)">Remove Sub-Question</button>
+        `;
+        subQuestionsContainer.appendChild(subQuestionDiv);
+    }
+
+    function clearQuestion(questionNumber) {
+        document.getElementById(`question${questionNumber}`).value = '';
+        const subQuestionsContainer = document.getElementById(`sub-questions${questionNumber}`);
+        for (let subQuestion of subQuestionsContainer.querySelectorAll('.sub-question input[type="text"]')) {
+            subQuestion.value = '';
+        }
+    }
+
+    function clearSubQuestion(button) {
+        button.closest('.sub-question').querySelector('input[type="text"]').value = '';
+    }
+
+    async function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const collegeName ="JNTUH University College of Engineering Manthani" ;
+        const collegeAddress = "Centenary Colony, Pannur (V), Ramagiri (M), Peddapally (D), Telangana-505212";
+        const subjectName = document.getElementById('subjectName').value;
+        const branch = document.getElementById('branch').value;
+        const marks = "Marks: 10";
+        const examDate = document.getElementById('examDate').value;
+        const examType = document.getElementById('examType').value;
+        doc.setFontSize(17);
+        doc.text(collegeName, 23, 13);
+        doc.setFontSize(12);
+        doc.text(collegeAddress, 19, 20);
+        doc.text("" + examType, 47, 27); 
+        doc.text("Subject: " + subjectName, 10, 34);
+        const branchWidth = doc.getTextWidth("Branch: " + branch);
+        const marksWidth = doc.getTextWidth("Marks: " + marks);
+        doc.text("Branch: " + branch, 10, 41);
+        doc.text(marks, 162 - marksWidth, 41); 
+        const examDateWidth = doc.getTextWidth("examDateWidth: " + branch);
+        const TimeWidth = doc.getTextWidth("Time: " + marks);
+        doc.text("Date of Exam: " + examDate, 10, 48); 
+        doc.text("Time: 100 Minutes",160- TimeWidth, 48); 
+        doc.line(10, 52, 200, 52); 
+        let yPos = 60; 
+        doc.text("Note: Answer any TWO questions choosing first from 1 &2 and the second from 3 & 4. (2 x 5 =10)", 10, yPos); 
+        yPos += 10;
+        yPos += 5; 
+
+        const questions = document.querySelectorAll('.question');
+        for (let i = 0; i < questions.length; i++) {
+            const question = questions[i];
+            const questionValue = question.querySelector('input[type="text"]').value.trim();
+            if (questionValue !== '') {
+                doc.text(`${i + 1}. (a) ${questionValue}`, 10, yPos);
+                const questionImage = question.querySelector('input[type="file"]').files[0];
+                if (questionImage) {
+                    await addImageToPDF(doc, questionImage, 10, yPos + 5);
+                    yPos += 55;
+                } else {
+                    yPos += 10;
+                }
+
+                const subQuestionsContainer = question.querySelector('.sub-questions');
+                if (subQuestionsContainer) {
+                    let subYPos = yPos + 10;
+                    for (let subInputDiv of subQuestionsContainer.querySelectorAll('.sub-question')) {
+                        const subInput = subInputDiv.querySelector('input[type="text"]');
+                        const subInputValue = subInput.value.trim();
+                        const subImageInput = subInputDiv.querySelector('input[type="file"]').files[0];
+
+                        if (subInputValue !== '') {
+                            doc.text(`   (b) ${subInputValue}`, 10, subYPos);
+                            if (subImageInput) {
+                                await addImageToPDF(doc, subImageInput, 10, subYPos + 5);
+                                subYPos += 55;
+                            } else {
+                                subYPos += 10;
+                            }
+                        }
+                    }
+                }
+                yPos += 20; 
+
+                if (i === 0 || i === 2) { 
+                    doc.text("(OR)", 100, yPos);
+                    yPos += 10;
+                }
+            }
+        }
+
+        doc.save("questions.pdf");
+        if (examType === 'mid1') {
+            storeInDatabase('mid1');
+        } else if (examType === 'mid2') {
+            storeInDatabase('mid2');
+        } else if (examType === 'sem') {
+            storeInDatabase('sem');
+        }
+    }
+
+    function addImageToPDF(doc, imageFile, x, y) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                doc.addImage(imgData, 'JPEG', x, y, 50, 50);
+                resolve();
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(imageFile);
+        });
+    }
+
+    function navigateToMultipleChoice() {
+        window.location.href = 'objectivetype.html';
+    }
+
+    async function storeInDatabase(tableName) {
+        const formData = new FormData(document.getElementById('question-form'));
+        formData.append('table', tableName);
+
+        try {
+            const response = await fetch('store_data.php', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                console.log(`Data stored successfully in ${tableName} table.`);
+            } else {
+                console.error('Failed to store data in the database.');
+            }
+        } catch (error) {
+            console.error('Error occurred while storing data:', error);
+        }
+    }
+
+    window.onload = function() {
+        for (let i = 0; i < 4; i++) {
+            addQuestion();
+        }
+    };
+</script>
+</body>
+</html>
